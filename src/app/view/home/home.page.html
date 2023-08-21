@@ -8,10 +8,9 @@
 
 <ion-content>
 
-  <ion-list *ngFor="let contato of lista_contatos">
-    <ion-item>
+  <ion-list *ngFor="let contato of lista_contatos; let i = index">
+    <ion-item (click)="editar(i)">
       <ion-label>{{contato.nome}}</ion-label>
-      <ion-label>{{contato.telefone}}</ion-label>
     </ion-item>
   </ion-list>
 

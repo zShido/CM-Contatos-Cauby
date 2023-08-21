@@ -22,4 +22,8 @@ export class HomePage {
     this.router.navigate(["/cadastrar"]);
   }
 
+  editar(index : number){
+    this.router.navigate(["/detalhar", index]);
+  }
+
 }
