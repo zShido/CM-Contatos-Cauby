@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import Contato from 'src/app/model/entities/Contato';
 import { ContatoService } from 'src/app/model/services/contato.service';
 
@@ -13,7 +13,10 @@ export class DetalharPage implements OnInit {
   telefone: number;
   contato: Contato;
   indice: number;
+  edicao: boolean = true;
+
   constructor(private actRoute : ActivatedRoute,
+    private router: Router,
     private contatoService: ContatoService) { }
 
   ngOnInit() {
@@ -26,8 +29,25 @@ export class DetalharPage implements OnInit {
     })
     this.nome = this.contato.nome;
     this.telefone = this.contato.telefone;
+  }
 
-    console.log(this.contato);
+  habilitar(){
+    if(this.edicao){
+      this.edicao = false;
+    }else{
+      this.edicao = true;
+    }
+  }
+
+  editar(){
+    let novo: Contato = new Contato(this.nome, this.telefone);
+    this.contatoService.editar(this.indice, novo);
+    this.router.navigate(["/home"]);
+  }
+
+  excluir(){
+    this.contatoService.excluir(this.indice);
+    this.router.navigate(["/home"]);
   }
 
 }

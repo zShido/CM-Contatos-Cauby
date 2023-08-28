@@ -1,4 +1,5 @@
 export default class Contato{
+  private _id: string;
   private _nome: string;
   private _telefone: number;
 
@@ -7,6 +8,12 @@ export default class Contato{
     this._telefone = telefone;
   }
 
+  public get id(): string {
+    return this._id;
+  }
+  public set id(value: string) {
+    this._id = value;
+  }
   public get nome(): string {
     return this._nome;
   }
