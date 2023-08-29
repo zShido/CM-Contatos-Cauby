@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import Contato from 'src/app/model/entities/Contato';
-import { ContatoService } from 'src/app/model/services/contato.service';
+import { FirebaseService } from 'src/app/model/services/firebase.service';
 
 @Component({
   selector: 'app-detalhar',
@@ -15,18 +15,11 @@ export class DetalharPage implements OnInit {
   indice: number;
   edicao: boolean = true;
 
-  constructor(private actRoute : ActivatedRoute,
-    private router: Router,
-    private contatoService: ContatoService) { }
+  constructor(private router: Router,
+    private firebase: FirebaseService) { }
 
   ngOnInit() {
-    this.actRoute.params.subscribe((parametros) => {
-      if(parametros["indice"]){
-       this.indice = parametros["indice"];
-       this.contato =
-       this.contatoService.obterPorIndice(this.indice);
-      }
-    })
+    this.contato = history.state.contato;
     this.nome = this.contato.nome;
     this.telefone = this.contato.telefone;
   }
@@ -41,12 +34,12 @@ export class DetalharPage implements OnInit {
 
   editar(){
     let novo: Contato = new Contato(this.nome, this.telefone);
-    this.contatoService.editar(this.indice, novo);
+    this.firebase.update(novo, this.contato.id);
     this.router.navigate(["/home"]);
   }
 
   excluir(){
-    this.contatoService.excluir(this.indice);
+    this.firebase.delete(this.contato);
     this.router.navigate(["/home"]);
   }
 

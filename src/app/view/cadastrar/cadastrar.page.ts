@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AlertController } from '@ionic/angular';
 import Contato from 'src/app/model/entities/Contato';
-import { ContatoService } from 'src/app/model/services/contato.service';
+import { FirebaseService } from 'src/app/model/services/firebase.service';
 
 @Component({
   selector: 'app-cadastrar',
@@ -14,7 +14,8 @@ export class CadastrarPage implements OnInit {
   public telefone! : number;
 
   constructor(private alertController: AlertController,
-    private router : Router, private contatoService: ContatoService)  { }
+    private router : Router,
+    private firebase: FirebaseService)  { }
 
   ngOnInit() {
   }
@@ -22,7 +23,7 @@ export class CadastrarPage implements OnInit {
   cadastrar(){
     if(this.nome && this.telefone){
       let novo : Contato = new Contato(this.nome, this.telefone);
-      this.contatoService.cadastrar(novo);
+      this.firebase.create(novo);
       this.presentAlert("Sucesso", "Contato Salvo!");
       this.router.navigate(["/home"]);
     }else{
