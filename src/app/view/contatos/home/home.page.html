@@ -24,6 +24,12 @@
     </ion-item>
   </ion-list>
 
+  <ion-fab horizontal="start" vertical="bottom">
+  <ion-fab-button (click)="logout()" color="danger">
+    <ion-icon name="power-outline"></ion-icon>
+  </ion-fab-button>
+</ion-fab>
+
   <ion-fab horizontal="end" vertical="bottom">
     <ion-fab-button (click)="irParaCadastrar()">
       <ion-icon name="person-add-outline"></ion-icon>
